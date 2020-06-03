@@ -22,7 +22,7 @@ public class Intake implements Subsystem {
         this.hardwareMap = hardwareMap;
     }
 
-    // State definition
+    // State enum definition
     public enum State {
         INTAKE(1.0),
         SPIT_OUT(-1.0),
@@ -53,6 +53,8 @@ public class Intake implements Subsystem {
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
+
+    // Periodic method (called by DogeCommander)
     @Override
     public void periodic() {
         intakeLeft. setPower(state.power);

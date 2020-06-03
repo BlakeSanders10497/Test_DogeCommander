@@ -28,10 +28,10 @@ public class TeleOpDriveControl implements Command {
     @Override
     public void periodic() {
 
+        // Mecanum drive
         mecDrive    = -gamepad.left_stick_y;
         mecStrafe   = gamepad.left_stick_x;
         mecTurn     = -gamepad.right_stick_x;
-
         drive.setMecanumPower(mecDrive, mecStrafe, mecTurn);
     }
 
