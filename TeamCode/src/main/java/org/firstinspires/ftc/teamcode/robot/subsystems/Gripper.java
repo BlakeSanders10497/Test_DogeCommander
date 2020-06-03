@@ -15,13 +15,6 @@ public class Gripper implements Subsystem {
 
     // State and interface variables
     public static final double WRIST_SCALAR = 0.01;
-//    public static final double WRIST_PLACING  = 0.20;
-//    public static final double WRIST_GRABBING = 1.00;
-//    public static final double WRIST_STARTING = 0.30;
-//    public static final double WRIST_STORING  = 0.37;
-
-//    public static final double GRIPPER_CLOSED = 0.0;
-//    public static final double GRIPPER_OPEN = 1.0;
 
     private WristState wristState;
     private GripState gripState;
