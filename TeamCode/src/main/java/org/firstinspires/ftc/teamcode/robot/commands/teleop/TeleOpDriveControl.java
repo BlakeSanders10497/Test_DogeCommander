@@ -6,8 +6,14 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Drive;
 
 public class TeleOpDriveControl implements Command {
+
     private Drive drive;
     private Gamepad gamepad;
+
+    // Mecanum motor power variables
+    private double mecDrive;
+    private double mecStrafe;
+    private double mecTurn;
 
     public TeleOpDriveControl(Drive drive, Gamepad gamepad) {
         this.drive = drive;
@@ -21,10 +27,12 @@ public class TeleOpDriveControl implements Command {
 
     @Override
     public void periodic() {
-        drive.setPower(
-                -gamepad.left_stick_y + gamepad.right_stick_x,
-                -gamepad.left_stick_y - gamepad.right_stick_x
-        );
+
+        mecDrive    = -gamepad.left_stick_y;
+        mecStrafe   = gamepad.left_stick_x;
+        mecTurn     = -gamepad.right_stick_x;
+
+        drive.setMecanumPower(mecDrive, mecStrafe, mecTurn);
     }
 
     @Override

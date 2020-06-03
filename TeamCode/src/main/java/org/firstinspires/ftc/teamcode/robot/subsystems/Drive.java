@@ -17,8 +17,10 @@ public class Drive implements Subsystem {
     private DcMotor rrDrive;
 
     // State and interface variables
-    private double leftPower = 0;
-    private double rightPower = 0;
+    private double frontLeftPower = 0;
+    private double frontRightPower = 0;
+    private double rearLeftPower = 0;
+    private double rearRightPower = 0;
 
     // Subsystem constructor
     public Drive(HardwareMap hardwareMap) {
@@ -27,8 +29,17 @@ public class Drive implements Subsystem {
 
     // Subsystem control (called by commands)
     public void setPower(double leftPower, double rightPower) {
-        this.leftPower = leftPower;
-        this.rightPower = rightPower;
+        this.frontLeftPower = leftPower;
+        this.frontRightPower = rightPower;
+        this.rearLeftPower = leftPower;
+        this.rearRightPower = rightPower;
+    }
+
+    public void setMecanumPower(double mDrive, double mStrafe, double mTwist) {
+        frontLeftPower  = (mDrive + mStrafe + mTwist);
+        frontRightPower = (mDrive - mStrafe - mTwist);
+        rearLeftPower   = (mDrive - mStrafe + mTwist);
+        rearRightPower  = (mDrive + mStrafe - mTwist);
     }
 
     // Initialization method ( similar to hardware.init(hardwareMap); )
@@ -56,9 +67,9 @@ public class Drive implements Subsystem {
     @Override
     public void periodic() {
         // Set all drive motor powers from local variables
-        flDrive.setPower(leftPower);
-        frDrive.setPower(rightPower);
-        rlDrive.setPower(leftPower);
-        rrDrive.setPower(rightPower);
+        flDrive.setPower(frontLeftPower);
+        frDrive.setPower(frontRightPower);
+        rlDrive.setPower(rearLeftPower);
+        rrDrive.setPower(rearRightPower);
     }
 }
