@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Drive;
 import org.slf4j.helpers.SubstituteLogger;
 
-public class TeleOpCommandTemplate implements Command {
+public class TeleOpTemplateCommand implements Command {
 
     // Subsystem
     private Subsystem subsystem;
@@ -18,7 +18,7 @@ public class TeleOpCommandTemplate implements Command {
     // Output variables
 
     // Constructor
-    public TeleOpCommandTemplate(Subsystem subsystem, Gamepad gamepad) {
+    public TeleOpTemplateCommand(Subsystem subsystem, Gamepad gamepad) {
         this.subsystem = subsystem;
         this.gamepad = gamepad;
     }
