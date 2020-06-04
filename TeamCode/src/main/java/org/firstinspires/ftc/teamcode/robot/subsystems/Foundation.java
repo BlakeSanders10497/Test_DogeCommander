@@ -14,7 +14,7 @@ public class Foundation implements Subsystem {
     private Servo foundRight;
 
     // State and interface variables
-    private State state;
+    private State state = State.OPEN;
 
     // Constructor
     public Foundation(HardwareMap hardwareMap) {
