@@ -15,6 +15,7 @@ public class TeleOpCapstoneControl implements Command {
 
     // Output variables
     private boolean capping;
+    private boolean stowing;
 
     // Constructor
     public TeleOpCapstoneControl(Capstone capstone, Gamepad gamepad) {
@@ -34,9 +35,11 @@ public class TeleOpCapstoneControl implements Command {
 
         // Get operator input
         capping = gamepad.dpad_down;
+        stowing = gamepad.dpad_up;
 
         // Provide output
-        capstone.setState(capping ? Capstone.State.CAP : Capstone.State.STOW);
+        if(capping) capstone.setState(Capstone.State.CAP);
+        if(stowing) capstone.setState(Capstone.State.STOW);
     }
 
     // End state
