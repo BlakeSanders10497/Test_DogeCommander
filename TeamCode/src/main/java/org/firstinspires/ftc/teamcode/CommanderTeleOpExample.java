@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.commands.teleop.TeleOpArmControl;
+import org.firstinspires.ftc.teamcode.robot.commands.teleop.TeleOpCapstoneControl;
 import org.firstinspires.ftc.teamcode.robot.commands.teleop.TeleOpDriveControl;
 import org.firstinspires.ftc.teamcode.robot.commands.teleop.TeleOpFoundationControl;
 import org.firstinspires.ftc.teamcode.robot.commands.teleop.TeleOpGripperControl;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.teleop.TeleOpIntakeControl;
 import org.firstinspires.ftc.teamcode.robot.commands.teleop.TeleOpLiftControl;
 import org.firstinspires.ftc.teamcode.robot.commands.teleop.TeleOpTapeDriveCommand;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.robot.subsystems.Capstone;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Foundation;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Gripper;
@@ -33,6 +35,7 @@ public class CommanderTeleOpExample extends LinearOpMode implements DogeOpMode {
         Gripper gripper = new Gripper(hardwareMap);
         Lift lift       = new Lift(hardwareMap);
         TapeDrive tapeDrive     = new TapeDrive(hardwareMap);
+        Capstone capstone       = new Capstone(hardwareMap);
 
         commander.registerSubsystem(drive);
         commander.registerSubsystem(intake);
@@ -41,6 +44,7 @@ public class CommanderTeleOpExample extends LinearOpMode implements DogeOpMode {
         commander.registerSubsystem(gripper);
         commander.registerSubsystem(lift);
         commander.registerSubsystem(tapeDrive);
+        commander.registerSubsystem(capstone);
         commander.init();
 
         waitForStart();
@@ -52,7 +56,8 @@ public class CommanderTeleOpExample extends LinearOpMode implements DogeOpMode {
                 new TeleOpFoundationControl(foundation, gamepad1),
                 new TeleOpGripperControl(gripper, gamepad2),
                 new TeleOpLiftControl   (lift, gamepad2),
-                new TeleOpTapeDriveCommand  (tapeDrive, gamepad1)
+                new TeleOpTapeDriveCommand  (tapeDrive, gamepad1),
+                new TeleOpCapstoneControl   (capstone, gamepad2)
         );
 
         commander.stop();
