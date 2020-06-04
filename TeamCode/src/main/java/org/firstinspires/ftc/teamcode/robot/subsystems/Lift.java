@@ -15,6 +15,7 @@ public class Lift implements Subsystem {
     private DcMotor pulleyRight;
 
     // State and interface variables
+    private State state = State.MANUAL;
     private double pulleyPower;
 
     // Constructor
@@ -22,10 +23,24 @@ public class Lift implements Subsystem {
         this.hardwareMap = hardwareMap;
     }
 
+    // State enum definition
+    public enum State {
+        MANUAL  (DcMotor.RunMode.RUN_WITHOUT_ENCODER),
+        RESET   (DcMotor.RunMode.RUN_TO_POSITION);
+
+        private final DcMotor.RunMode runMode;
+
+        State(DcMotor.RunMode runMode) { this.runMode = runMode; }
+    }
+
     // Subsystem control (called by commands)
+    public void setState(State state) { this.state = state; }
     public void setLiftPower(double power) {
         this.pulleyPower = power;
     }
+
+    // Getters
+    public boolean getLiftIsBusy() { return pulleyLeft.isBusy() && pulleyRight.isBusy(); }
 
     // Subsystem initialization ( similar to hardware.init(hardwareMap) )
     @Override
@@ -42,13 +57,25 @@ public class Lift implements Subsystem {
         pulleyLeft. setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         pulleyRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        pulleyLeft. setTargetPosition(0);
+        pulleyRight.setTargetPosition(0);
+
     }
 
 
     // Periodic method (called by DogeCommander)
     @Override
     public void periodic() {
-        pulleyLeft. setPower(pulleyPower);
-        pulleyRight.setPower(pulleyPower);
+
+        pulleyLeft.setMode  (state.runMode);
+        pulleyRight.setMode (state.runMode);
+
+        if(state.equals(State.MANUAL)) {
+            pulleyLeft. setPower(pulleyPower);
+            pulleyRight.setPower(pulleyPower);
+        } else if(state.equals(State.RESET)) {
+            pulleyLeft. setPower(1.0);
+            pulleyRight.setPower(1.0);
+        }
     }
 }
