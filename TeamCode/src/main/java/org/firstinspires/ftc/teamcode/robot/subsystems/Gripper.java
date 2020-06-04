@@ -56,6 +56,10 @@ public class Gripper implements Subsystem {
     public void setGripState(GripState gripState) {
         this.gripState = gripState;
     }
+    public void toggleGripState() {
+        if(gripState.equals(GripState.OPEN)) setGripState(GripState.GRIP);
+        else if(gripState.equals(GripState.GRIP)) setGripState(GripState.OPEN);
+    }
 
     public void setWristPos(double pos) { this.wristPos = Range.clip(pos, 0.0, 1.0); }
 

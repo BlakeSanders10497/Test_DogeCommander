@@ -2,10 +2,14 @@ package org.firstinspires.ftc.teamcode.robot.commands.teleop;
 
 import com.disnodeteam.dogecommander.Command;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.subsystems.Gripper;
 
 public class TeleOpGripperControl implements Command {
+
+    // Timer
+    private ElapsedTime time;
 
     // Subsystem
     private Gripper gripper;
@@ -16,15 +20,21 @@ public class TeleOpGripperControl implements Command {
     // Output variables
     private boolean wristStore;
     private boolean wristGrab;
-    private boolean gripGrip;
-
     private double wristManual;
     private final double WRIST_SCALAR = 0.000005;
     private final double WRIST_THRESHOLD = 0.05;
 
+    private final double COOLDOWN = 1.00;   // Seconds
+    private double lastToggle = -COOLDOWN;  // -COOLDOWN to make it respond on first button press
+    private double timestamp;
+    private boolean ready;
+    private boolean gripGrip;
+
 
     // Constructor
     public TeleOpGripperControl(Gripper gripper, Gamepad gamepad) {
+        time = new ElapsedTime();
+
         this.gripper = gripper;
         this.gamepad = gamepad;
     }
@@ -32,6 +42,8 @@ public class TeleOpGripperControl implements Command {
     // Initial state
     @Override
     public void start() {
+        time.reset();
+
         gripper.setWristState(Gripper.WristState.START);
         gripper.setGripState(Gripper.GripState.OPEN);
     }
@@ -39,6 +51,10 @@ public class TeleOpGripperControl implements Command {
     // Running state
     @Override
     public void periodic() {
+
+        // Handle cooldown
+        timestamp = time.seconds();
+        ready = (timestamp - lastToggle > COOLDOWN);
 
         // Get operator input
         wristStore  = gamepad.right_bumper;
@@ -55,7 +71,11 @@ public class TeleOpGripperControl implements Command {
         else if(wristStore) gripper.setWristState(Gripper.WristState.STORE);
         else if(wristGrab) gripper.setWristState(Gripper.WristState.GRAB);
 
-        gripper.setGripState(gripGrip ? Gripper.GripState.GRIP : Gripper.GripState.OPEN);
+        if(gripGrip && ready) {
+            lastToggle = timestamp;
+            gripper.toggleGripState();
+        }
+
 
     }
 
