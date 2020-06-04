@@ -16,8 +16,8 @@ public class Gripper implements Subsystem {
     // State and interface variables
     public static final double WRIST_SCALAR = 0.01;
 
-    private WristState wristState;
-    private GripState gripState;
+    private WristState wristState = WristState.START;
+    private GripState gripState = GripState.OPEN;
 
     // Constructor
     public Gripper(HardwareMap hardwareMap) {
