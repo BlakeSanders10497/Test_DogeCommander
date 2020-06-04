@@ -15,6 +15,7 @@ public class TeleOpArmControl implements Command {
     private Gamepad gamepad;
 
     // Output variables
+    private final double ARM_SPEED_SCALAR = 0.6;
     private double armPower;
 
     // Constructor
@@ -34,7 +35,7 @@ public class TeleOpArmControl implements Command {
     public void periodic() {
 
         // Drive arm
-        armPower = gamepad.left_stick_y;
+        armPower = gamepad.left_stick_y * ARM_SPEED_SCALAR;
         arm.setArmPower(armPower);
     }
 
