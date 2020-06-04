@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.robot.commands;
+package org.firstinspires.ftc.teamcode.robot.commands.auto;
 
 import com.disnodeteam.dogecommander.Command;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.dogecommander.bot.subsystems.Drive;
+import org.firstinspires.ftc.teamcode.robot.subsystems.Drive;
 
 public class DriveForTime implements Command {
     private ElapsedTime timer;
