@@ -9,7 +9,6 @@ import org.slf4j.helpers.SubstituteLogger;
 
 public class TeleOpCommandTemplate implements Command {
 
-
     // Subsystem
     private Subsystem subsystem;
 
