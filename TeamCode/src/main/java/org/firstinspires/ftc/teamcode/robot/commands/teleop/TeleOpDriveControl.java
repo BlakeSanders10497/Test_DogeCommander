@@ -7,24 +7,30 @@ import org.firstinspires.ftc.teamcode.robot.subsystems.Drive;
 
 public class TeleOpDriveControl implements Command {
 
+    // Subsystem
     private Drive drive;
+
+    // Input
     private Gamepad gamepad;
 
-    // Mecanum motor power variables
+    // Output variables
     private double mecDrive;
     private double mecStrafe;
     private double mecTurn;
 
+    // Constructor
     public TeleOpDriveControl(Drive drive, Gamepad gamepad) {
         this.drive = drive;
         this.gamepad = gamepad;
     }
 
+    // Initial state
     @Override
     public void start() {
         drive.setPower(0, 0);
     }
 
+    // Running state
     @Override
     public void periodic() {
 
@@ -35,11 +41,13 @@ public class TeleOpDriveControl implements Command {
         drive.setMecanumPower(mecDrive, mecStrafe, mecTurn);
     }
 
+    // End state
     @Override
     public void stop() {
         drive.setPower(0, 0);
     }
 
+    // Progress tracking
     @Override
     public boolean isCompleted() {
         return false;
