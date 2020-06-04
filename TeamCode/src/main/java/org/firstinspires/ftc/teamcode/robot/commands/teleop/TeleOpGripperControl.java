@@ -18,6 +18,11 @@ public class TeleOpGripperControl implements Command {
     private boolean wristGrab;
     private boolean gripGrip;
 
+    private double wristManual;
+    private final double WRIST_SCALAR = 0.000005;
+    private final double WRIST_THRESHOLD = 0.05;
+
+
     // Constructor
     public TeleOpGripperControl(Gripper gripper, Gamepad gamepad) {
         this.gripper = gripper;
@@ -40,9 +45,15 @@ public class TeleOpGripperControl implements Command {
         wristGrab   = gamepad.x;
         gripGrip    = gamepad.a;
 
+        wristManual = gamepad.right_stick_y;
+
         // Provide output
-        if(wristStore)  gripper.setWristState(Gripper.WristState.STORE);
-        if(wristGrab)   gripper.setWristState(Gripper.WristState.GRAB);
+        if(Math.abs(wristManual) > WRIST_THRESHOLD) {
+            gripper.setWristState(Gripper.WristState.MANUAL);
+            gripper.setWristPos(gripper.getWristPos() + (wristManual * WRIST_SCALAR));
+        }
+        else if(wristStore) gripper.setWristState(Gripper.WristState.STORE);
+        else if(wristGrab) gripper.setWristState(Gripper.WristState.GRAB);
 
         gripper.setGripState(gripGrip ? Gripper.GripState.GRIP : Gripper.GripState.OPEN);
 
