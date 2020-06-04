@@ -38,6 +38,10 @@ public class Foundation implements Subsystem {
     public void setState(State state) {
         this.state = state;
     }
+    public void toggleState() {
+        if(state.equals(State.OPEN)) setState(State.GRIP);
+        else if(state.equals(State.GRIP)) setState(State.OPEN);
+    }
 
     // Subsystem initialization ( similar to hardware.init(hardwareMap) )
     @Override
