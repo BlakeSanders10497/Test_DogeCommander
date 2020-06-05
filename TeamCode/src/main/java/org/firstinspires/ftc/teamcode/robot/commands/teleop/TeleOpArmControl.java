@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.commands.teleop;
 
 import com.disnodeteam.dogecommander.Command;
-import com.disnodeteam.dogecommander.Subsystem;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.robot.subsystems.Arm;
@@ -27,7 +26,7 @@ public class TeleOpArmControl implements Command {
     // Initial state
     @Override
     public void start() {
-        arm.setArmPower(0.0);
+        arm.setPower(0.0);
     }
 
     // Running state
@@ -36,13 +35,13 @@ public class TeleOpArmControl implements Command {
 
         // Drive arm
         armPower = gamepad.left_stick_y * ARM_SPEED_SCALAR;
-        arm.setArmPower(armPower);
+        arm.setPower(armPower);
     }
 
     // End state
     @Override
     public void stop() {
-        arm.setArmPower(0.0);
+        arm.setPower(0.0);
     }
 
     // Progress tracking

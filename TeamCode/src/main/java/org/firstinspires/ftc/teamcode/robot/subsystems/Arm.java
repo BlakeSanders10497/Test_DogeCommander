@@ -16,6 +16,7 @@ public class Arm implements Subsystem {
 
     // State and interface variables
     private double armPower;
+    private double target;
 
     // Constructor
     public Arm(HardwareMap hardwareMap) {
@@ -23,9 +24,18 @@ public class Arm implements Subsystem {
     }
 
     // Subsystem control (called by commands)
-    public void setArmPower(double power) {
+    public void setPower(double power) {
         this.armPower = power;
     }
+    public void setTarget(int target) { arm.setTargetPosition(target); }
+    public void setMode(DcMotor.RunMode mode) {
+        arm.setMode(mode);
+    }
+
+    // Getters
+    public boolean armIsBusy() { return arm.isBusy(); }
+    public int getCurrentPosition() { return arm.getCurrentPosition(); }
+    public DcMotor.RunMode getMode() { return arm.getMode(); }
 
     // Subsystem initialization ( similar to hardware.init(hardwareMap) )
     @Override
