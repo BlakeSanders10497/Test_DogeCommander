@@ -28,18 +28,48 @@ public class Drive implements Subsystem {
     }
 
     // Subsystem control (called by commands)
+    public void setMecanumPower(double mDrive, double mStrafe, double mTwist) {
+        frontLeftPower  = (mDrive + mStrafe + mTwist);
+        frontRightPower = (mDrive - mStrafe - mTwist);
+        rearLeftPower   = (mDrive - mStrafe + mTwist);
+        rearRightPower  = (mDrive + mStrafe - mTwist);
+    }
     public void setPower(double leftPower, double rightPower) {
         this.frontLeftPower = leftPower;
         this.frontRightPower = rightPower;
         this.rearLeftPower = leftPower;
         this.rearRightPower = rightPower;
     }
+    public void setTargets(int flTarget, int frTarget, int rlTarget, int rrTarget) {
+        flDrive.setTargetPosition(flTarget);
+        frDrive.setTargetPosition(frTarget);
+        rlDrive.setTargetPosition(rlTarget);
+        rrDrive.setTargetPosition(rrTarget);
+    }
+    public void setRunMode(DcMotor.RunMode runMode) {
+        flDrive.setMode(runMode);
+        frDrive.setMode(runMode);
+        rlDrive.setMode(runMode);
+        rrDrive.setMode(runMode);
+    }
 
-    public void setMecanumPower(double mDrive, double mStrafe, double mTwist) {
-        frontLeftPower  = (mDrive + mStrafe + mTwist);
-        frontRightPower = (mDrive - mStrafe - mTwist);
-        rearLeftPower   = (mDrive - mStrafe + mTwist);
-        rearRightPower  = (mDrive + mStrafe - mTwist);
+    // Getters
+    public int[] getCurrentPositions() {
+        return new int[] {
+                flDrive.getCurrentPosition(),
+                frDrive.getCurrentPosition(),
+                rlDrive.getCurrentPosition(),
+                rrDrive.getCurrentPosition()
+        };
+    }
+    public DcMotor.RunMode getMode() { return flDrive.getMode(); } // Presume all drive motor RunModes are the same
+    public boolean driveIsBusy() {
+        return (
+            flDrive.isBusy() &&
+            frDrive.isBusy() &&
+            rlDrive.isBusy() &&
+            rrDrive.isBusy()
+        );
     }
 
     // Initialization method ( similar to hardware.init(hardwareMap); )

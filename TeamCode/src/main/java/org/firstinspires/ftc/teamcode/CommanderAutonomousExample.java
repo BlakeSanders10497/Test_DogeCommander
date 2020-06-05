@@ -5,8 +5,7 @@ import com.disnodeteam.dogecommander.DogeOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.robot.commands.auto.DriveForTime;
-import org.firstinspires.ftc.teamcode.robot.commands.auto.RunIntakeForTime;
+import org.firstinspires.ftc.teamcode.robot.commands.auto.DriveByEncoder;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Intake;
 
@@ -25,13 +24,7 @@ public class CommanderAutonomousExample extends LinearOpMode implements DogeOpMo
 
         waitForStart();
 
-        commander.runCommandsParallel(
-                new DriveForTime(drive, 3, 0.4),
-                new RunIntakeForTime(intake, 1, Intake.State.INTAKE)
-        );
-
-        commander.runCommand(new RunIntakeForTime(intake, 2, Intake.State.SPIT_OUT));
-        commander.runCommand(new DriveForTime(drive, 1, 0.5));
+        commander.runCommand(new DriveByEncoder(drive, 1000, 0.4, 5.0));
 
         commander.stop();
     }
