@@ -28,7 +28,7 @@ public class CommanderTeleOpExample extends LinearOpMode implements DogeOpMode {
     public void runOpMode() {
         DogeCommander commander = new DogeCommander(this);
 
-        Drive drive     = new Drive (hardwareMap);
+        Drive drive     = new Drive (hardwareMap, false);
         Intake intake   = new Intake(hardwareMap);
         Arm arm         = new Arm   (hardwareMap);
         Foundation foundation   = new Foundation(hardwareMap);

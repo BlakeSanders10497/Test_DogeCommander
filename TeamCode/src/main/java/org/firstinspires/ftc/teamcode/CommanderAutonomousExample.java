@@ -15,7 +15,7 @@ public class CommanderAutonomousExample extends LinearOpMode implements DogeOpMo
     public void runOpMode() throws InterruptedException {
         DogeCommander commander = new DogeCommander(this);
 
-        Drive drive = new Drive(hardwareMap);
+        Drive drive = new Drive(hardwareMap, true);
         Intake intake = new Intake(hardwareMap);
 
         commander.registerSubsystem(drive);
@@ -24,7 +24,7 @@ public class CommanderAutonomousExample extends LinearOpMode implements DogeOpMo
 
         waitForStart();
 
-        commander.runCommand(new DriveByEncoder(drive, 1000, 0.4, 5.0));
+        commander.runCommand(new DriveByEncoder(drive, 3000, 0.0, 0.6, 5.0));
 
         commander.stop();
     }

@@ -1,9 +1,15 @@
 package org.firstinspires.ftc.teamcode.robot.subsystems;
 
 import com.disnodeteam.dogecommander.Subsystem;
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 public class Drive implements Subsystem {
 
@@ -15,16 +21,19 @@ public class Drive implements Subsystem {
     private DcMotor frDrive;
     private DcMotor rlDrive;
     private DcMotor rrDrive;
+    private BNO055IMU imu;
 
     // State and interface variables
     private double frontLeftPower = 0;
     private double frontRightPower = 0;
     private double rearLeftPower = 0;
     private double rearRightPower = 0;
+    private boolean initIMU;
 
-    // Subsystem constructor
-    public Drive(HardwareMap hardwareMap) {
+    // Subsystem constructors
+    public Drive(HardwareMap hardwareMap, boolean initIMU) {
         this.hardwareMap = hardwareMap;
+        this.initIMU = initIMU;
     }
 
     // Subsystem control (called by commands)
@@ -71,6 +80,9 @@ public class Drive implements Subsystem {
             rrDrive.isBusy()
         );
     }
+    public float heading() {
+        return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+    }
 
     // Initialization method ( similar to hardware.init(hardwareMap); )
     @Override
@@ -81,6 +93,19 @@ public class Drive implements Subsystem {
         frDrive = hardwareMap.dcMotor.get("fr_drive");
         rlDrive = hardwareMap.dcMotor.get("rl_drive");
         rrDrive = hardwareMap.dcMotor.get("rr_drive");
+
+        if(initIMU) {
+            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+            parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+            parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+            parameters.calibrationDataFile = "BNO055IMUCalibration.json";
+            parameters.loggingEnabled      = true;
+            parameters.loggingTag          = "IMU";
+            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+            imu = hardwareMap.get(BNO055IMU.class, "imu");
+            imu.initialize(parameters);
+        }
 
         // Reverse left side
         flDrive.setDirection(DcMotorSimple.Direction.REVERSE);
