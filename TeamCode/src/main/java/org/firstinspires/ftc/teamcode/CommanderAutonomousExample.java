@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.robot.commands.auto.ArmByEncoder;
 import org.firstinspires.ftc.teamcode.robot.commands.auto.DriveByEncoder;
 import org.firstinspires.ftc.teamcode.robot.commands.auto.GripperPrepGripStone;
+import org.firstinspires.ftc.teamcode.robot.commands.auto.RunIntakeForTime;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Gripper;
@@ -34,6 +35,7 @@ public class CommanderAutonomousExample extends LinearOpMode implements DogeOpMo
 
         commander.runCommandsParallel(
                 new DriveByEncoder(drive, 3000, 0.0, 0.6, 5.0),
+                new RunIntakeForTime(intake, 3.0, Intake.State.INTAKE),
                 new ArmByEncoder(arm, -1200, 0.4, 3.0),
                 new GripperPrepGripStone(gripper, 1.0)
         );
