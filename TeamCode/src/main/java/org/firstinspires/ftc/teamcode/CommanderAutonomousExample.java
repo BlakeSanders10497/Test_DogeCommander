@@ -37,16 +37,18 @@ public class CommanderAutonomousExample extends LinearOpMode implements DogeOpMo
         waitForStart();
 
         commander.runCommandsParallel(
-                new DriveByEncoder(drive, 3000, 0.0, 0.6, 5.0),
+                new DriveByEncoder(drive, 3000, 0.0, 0.6, 3.0),
                 new RunIntakeForTime(intake, 3.0, Intake.State.INTAKE),
-                new ArmByEncoder(arm, -1200, 0.4, 3.0),
-                new GripperPrepGripStone(gripper, 1.0)
+                new ArmByEncoder(arm, -1200, 0.4, 2.0),
+                new GripperPrepGripStone(gripper, 0.5)
         );
 
-        commander.runCommand(new ArmByEncoder(arm, 1000, 0.4, 3.0));
+        commander.runCommand(new ArmByEncoder(arm, 900, 0.4, 3.0));
         commander.runCommand(new GripperGripStone(gripper, 0.0));
-        commander.runCommand(new ArmByEncoder(arm, -2400, 0.5, 3.0));
-        commander.runCommand(new GripperPrepReleaseStone(gripper, 0.0));
+        commander.runCommandsParallel(
+                new ArmByEncoder(arm, -2400, 0.5, 3.0),
+                new GripperPrepReleaseStone(gripper, 1.0)
+        );
         commander.runCommand(new GripperReleaseStone(gripper, 0.0));
 
         commander.stop();

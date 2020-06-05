@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robot.subsystems.Gripper;
 public class GripperReleaseStone implements Command {
 
     ElapsedTime timer;
-    private final double TIMEOUT = 2.5;
+    private final double TIMEOUT = 0.5;
 
     // Subsystem
     private Gripper gripper;
