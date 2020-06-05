@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.auto.ArmByEncoder;
 import org.firstinspires.ftc.teamcode.robot.commands.auto.DriveByEncoder;
 import org.firstinspires.ftc.teamcode.robot.commands.auto.GripperGripStone;
 import org.firstinspires.ftc.teamcode.robot.commands.auto.GripperPrepGripStone;
+import org.firstinspires.ftc.teamcode.robot.commands.auto.GripperPrepReleaseStone;
 import org.firstinspires.ftc.teamcode.robot.commands.auto.RunIntakeForTime;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Drive;
@@ -43,6 +44,9 @@ public class CommanderAutonomousExample extends LinearOpMode implements DogeOpMo
 
         commander.runCommand(new ArmByEncoder(arm, 1000, 0.4, 3.0));
         commander.runCommand(new GripperGripStone(gripper, 0.0));
+        commander.runCommand(new ArmByEncoder(arm, -2400, 0.5, 3.0));
+        commander.runCommand(new GripperPrepReleaseStone(gripper, 0.0));
+
         commander.stop();
     }
 }
