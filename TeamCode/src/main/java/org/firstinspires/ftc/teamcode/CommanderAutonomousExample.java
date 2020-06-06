@@ -45,6 +45,7 @@ public class CommanderAutonomousExample extends LinearOpMode implements DogeOpMo
 
         commander.runCommand(new ArmByEncoder(arm, 900, 0.4, 3.0));
         commander.runCommand(new GripperGripStone(gripper, 0.0));
+        commander.runCommand(new DriveByEncoder(drive, -3000, 0.0, 0.6, 3.0));
         commander.runCommandsParallel(
                 new ArmByEncoder(arm, -2400, 0.5, 3.0),
                 new GripperPrepReleaseStone(gripper, 1.0)
