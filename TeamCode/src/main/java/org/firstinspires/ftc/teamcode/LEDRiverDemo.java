@@ -30,8 +30,6 @@ public class LEDRiverDemo extends LinearOpMode implements DogeOpMode {
         ledRiver.apply();
         Thread.sleep(1000);
 
-        // TODO: fix null pointer on ledRiver
-
         ledRiver.setColor(Color.BLUE).apply();
         Thread.sleep(1000);
 
