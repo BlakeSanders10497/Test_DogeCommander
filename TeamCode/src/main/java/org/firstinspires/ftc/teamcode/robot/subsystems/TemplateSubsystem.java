@@ -17,6 +17,11 @@ public class TemplateSubsystem implements Subsystem {
         this.hardwareMap = hardwareMap;
     }
 
+    // State enum definition
+    public enum State {
+
+    }
+
     // Subsystem control (called by commands)
 
     // Subsystem initialization ( similar to hardware.init(hardwareMap) )
