@@ -18,11 +18,12 @@ public class LEDRiverDemo extends LinearOpMode implements DogeOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //DogeCommander commander = new DogeCommander(this);
+        DogeCommander commander = new DogeCommander(this);
 
         River ledRiver = new River(hardwareMap);
 
-        //commander.registerSubsystem(ledRiver);
+        commander.registerSubsystem(ledRiver);
+        commander.init();
 
         waitForStart();
 
