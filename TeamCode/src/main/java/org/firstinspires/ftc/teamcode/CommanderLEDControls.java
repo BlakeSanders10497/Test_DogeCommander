@@ -56,6 +56,7 @@ public class CommanderLEDControls extends LinearOpMode implements DogeOpMode {
             if(gamepad1.x) ledRiver.setColor(Color.BLUE).apply();
             if(gamepad1.y) ledRiver.setColor(Color.YELLOW).apply();
 
+            ledRiver.setHide(gamepad1.left_bumper).apply();
 
         }
 
